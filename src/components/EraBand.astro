@@ -1,0 +1,17 @@
+---
+import type { Era } from '../lib/eras'
+
+interface Props {
+  era: Era
+}
+
+const { era } = Astro.props
+---
+
+<div class="era-band flex items-center gap-3 pt-16 pb-8" data-era={era.slug}>
+  <span class="h-px flex-1 bg-spine" aria-hidden="true"></span>
+  <span class="font-sans text-[11px] uppercase tracking-[0.18em] text-kicker whitespace-nowrap">
+    {era.label}
+  </span>
+  <span class="h-px flex-1 bg-spine" aria-hidden="true"></span>
+</div>

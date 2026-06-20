@@ -1,14 +1,58 @@
 ---
 import Base from '../layouts/Base.astro'
 import Hero from '../components/Hero.astro'
-import Trail from '../components/Trail.astro'
+import Dock from '../components/Dock.astro'
+import EraBand from '../components/EraBand.astro'
+import Year from '../components/Year.astro'
 import Footer from '../components/Footer.astro'
+import { loadYears, loadGotchas } from '../lib/events'
+import { ERAS } from '../lib/eras'
+
+const years = loadYears()
+const gotchas = loadGotchas()
+const total = years.reduce((n, y) => n + y.stops.length, 0)
+
+// Decade anchors: the first year of each decade gets an id the jump rail targets.
+const decadeSeen = new Set<number>()
+const anchorForYear = new Map<number, string>()
+for (const y of years) {
+  if (!decadeSeen.has(y.decade)) {
+    decadeSeen.add(y.decade)
+    anchorForYear.set(y.year, `d${y.decade}`)
+  }
+}
+const decades = [...decadeSeen].sort((a, b) => a - b)
+
+// Eras are soft dividers along one continuous scroll, not separate pages.
+const eraGroups = ERAS.map((era) => ({
+  era,
+  years: years.filter((y) => y.era.slug === era.slug),
+})).filter((g) => g.years.length)
 ---
 
 <Base>
   <main id="main" tabindex="-1" class="mx-auto max-w-[600px] px-5">
     <Hero />
-    <Trail />
+
+    <div id="timeline">
+      {
+        eraGroups.map(({ era, years }) => (
+          <section class="era" data-era={era.slug}>
+            <EraBand era={era} />
+            {years.map((y) => (
+              <Year group={y} anchorId={anchorForYear.get(y.year)} />
+            ))}
+          </section>
+        ))
+      }
+    </div>
+
     <Footer />
   </main>
+
+  <Dock decades={decades} totalCount={total} gotchas={gotchas} />
+
+  <script>
+    import '../scripts/timeline.ts'
+  </script>
 </Base>

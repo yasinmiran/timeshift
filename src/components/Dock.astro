@@ -1,0 +1,84 @@
+---
+import { CATEGORIES, type CategoryId } from '../lib/categories'
+
+interface Props {
+  decades: number[]
+  totalCount: number
+  gotchas: { title: string; blurb: string }[]
+}
+
+const { decades, totalCount, gotchas } = Astro.props
+const cats = Object.entries(CATEGORIES) as [CategoryId, { label: string; node: string }][]
+---
+
+<aside id="dock" class="fixed bottom-4 right-3 z-40 flex flex-col items-end gap-2" aria-label="Timeline tools">
+  <div id="panel-filter" class="dock-popover" role="group" aria-label="Filter by category" hidden>
+    <p class="dock-title">Filter by category</p>
+    <div class="flex flex-wrap gap-1.5">
+      <button type="button" class="cat-chip is-on" data-cat="all" aria-pressed="true">All</button>
+      {
+        cats.map(([id, c]) => (
+          <button type="button" class="cat-chip" data-cat={id} aria-pressed="false" style={`--chip:${c.node}`}>
+            {c.label}
+          </button>
+        ))
+      }
+    </div>
+    <p id="stop-count" class="dock-count">{totalCount} events</p>
+  </div>
+
+  <div id="panel-jump" class="dock-popover" aria-label="Jump to a decade" hidden>
+    <p class="dock-title">Jump to a decade</p>
+    <nav class="flex flex-wrap gap-x-3 gap-y-1.5">
+      {decades.map((d) => <a class="dock-jump" href={`#d${d}`}>{d}s</a>)}
+    </nav>
+  </div>
+
+  <div id="panel-gotcha" class="dock-popover" aria-label="Gotchas" hidden>
+    <p class="dock-title">Gotchas</p>
+    <p class="dock-note">
+      Some time bugs aren't tied to a date. These evergreen gotchas are coming in a future edition:
+    </p>
+    <ul class="dock-gotcha-list">
+      {
+        gotchas.map((g) => (
+          <li>
+            <span class="block font-medium text-ink">{g.title}</span>
+            <span class="block text-muted">{g.blurb}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <button type="button" class="dock-btn" data-panel="filter" aria-label="Filter by category" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 5h18l-7 8v6l-4 2v-8z"></path>
+      </svg>
+    </button>
+    <button type="button" id="dock-tier" class="dock-btn" aria-label="Show highlights only" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3l2.5 5.5 6 .6-4.4 4 1.3 5.9L12 21l-5.4 3 1.3-5.9-4.4-4 6-.6z"></path>
+      </svg>
+    </button>
+    <button type="button" class="dock-btn" data-panel="jump" aria-label="Jump to a decade" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.5"></circle>
+        <path d="M12 7.5V12l3 2"></path>
+      </svg>
+    </button>
+    <button type="button" class="dock-btn" data-panel="gotcha" aria-label="Gotchas, coming in a future edition" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3.5l9 16H3z"></path>
+        <path d="M12 10v4"></path>
+        <path d="M12 17.5h.01"></path>
+      </svg>
+    </button>
+    <a href="#main" class="dock-btn" aria-label="Back to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V6M6 12l6-6 6 6"></path>
+      </svg>
+    </a>
+  </div>
+</aside>

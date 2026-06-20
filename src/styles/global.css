@@ -27,30 +27,34 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* native details accordion: hide default marker, swap the summary label */
-summary {
-  list-style: none;
-  cursor: pointer;
-}
-summary::-webkit-details-marker {
-  display: none;
-}
-details[open] .when-closed {
-  display: none;
-}
-details:not([open]) .when-open {
-  display: none;
-}
-
 a:focus-visible,
-summary:focus-visible {
+button:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-/* gentle reveal when a stop opens; disabled under reduced-motion below */
-@keyframes stop-reveal {
+/* event card: story is always inline; a thin category-colored rule anchors it */
+.ev-card {
+  border-left: 2px solid color-mix(in srgb, var(--cat, var(--color-spine)) 55%, var(--color-hairline));
+  padding-left: 0.9rem;
+}
+
+/* "read further": reveals the when/who/dev-notes layer in place; chevron flips */
+.ev-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.ev-more::after {
+  content: "\2193";
+  display: inline-block;
+  transition: transform 0.18s ease-out;
+}
+.ev-more[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+@keyframes ev-reveal {
   from {
     opacity: 0;
     transform: translateY(-4px);
@@ -60,8 +64,104 @@ summary:focus-visible {
     transform: translateY(0);
   }
 }
-details[name="stop"][open] .stop-panel {
-  animation: stop-reveal 0.22s ease-out;
+.ev-extra {
+  animation: ev-reveal 0.22s ease-out;
+}
+.ev-extra-inner {
+  border-top: 1px solid var(--color-hairline);
+  margin-top: 0.75rem;
+  padding-top: 0.85rem;
+  max-width: 22rem;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* floating dock: icon buttons on the right edge, each opening a popover */
+.dock-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-hairline);
+  background: color-mix(in srgb, var(--color-paper) 88%, transparent);
+  color: var(--color-muted);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 3px rgb(33 30 26 / 0.08);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.dock-btn svg {
+  height: 1.15rem;
+  width: 1.15rem;
+}
+.dock-btn:hover {
+  color: var(--color-ink);
+  border-color: var(--color-accent);
+}
+.dock-btn[aria-pressed="true"],
+.dock-btn[aria-expanded="true"] {
+  color: var(--color-link);
+  border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-hairline));
+}
+.dock-btn.is-on {
+  color: var(--color-link);
+}
+.dock-popover {
+  position: absolute;
+  bottom: 0;
+  right: 3.25rem;
+  width: 15rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 0.9rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--color-hairline);
+  background: color-mix(in srgb, var(--color-paper) 96%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgb(33 30 26 / 0.12);
+}
+.dock-title {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-kicker);
+  margin-bottom: 0.6rem;
+}
+.dock-count {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--color-muted);
+  margin-top: 0.6rem;
+}
+.dock-jump {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-muted);
+}
+.dock-jump:hover {
+  color: var(--color-link);
+}
+.dock-note {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-muted);
+  margin-bottom: 0.6rem;
+}
+.dock-gotcha-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -72,4 +172,38 @@ details[name="stop"][open] .stop-panel {
     transition: none !important;
     scroll-behavior: auto !important;
   }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+/* small breathing room when a decade anchor is jumped to */
+.yr[id] {
+  scroll-margin-top: 1.5rem;
+}
+
+/* category filter chips */
+.cat-chip {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 1;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--color-hairline);
+  color: var(--color-muted);
+  background: transparent;
+  cursor: pointer;
+}
+.cat-chip:hover {
+  color: var(--color-ink);
+}
+.cat-chip.is-on {
+  color: var(--color-ink);
+  border-color: color-mix(in srgb, var(--chip, var(--color-accent)) 55%, var(--color-hairline));
+  background: color-mix(in srgb, var(--chip, var(--color-accent)) 12%, transparent);
+}
+.cat-chip:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
 }

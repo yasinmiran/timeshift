@@ -9,13 +9,21 @@ test('home page has no axe violations', async ({ page }) => {
   expect(results.violations).toEqual([])
 })
 
-test('expanded stop has no axe violations', async ({ page }) => {
+test('an expanded "read further" layer has no axe violations', async ({ page }) => {
   await page.goto('/')
-  await page.locator('ol > li:first-child summary').click()
+  const first = page.locator('.ev-card').first()
+  await first.locator('.ev-more').click()
   // let the reveal animation settle so contrast is measured at full opacity
-  await page
-    .locator('ol > li:first-child .stop-panel')
+  await first
+    .locator('.ev-extra')
     .evaluate((el) => Promise.all(el.getAnimations().map((a) => a.finished)))
+  const results = await new AxeBuilder({ page }).withTags(TAGS).analyze()
+  expect(results.violations).toEqual([])
+})
+
+test('the open dock panels have no axe violations', async ({ page }) => {
+  await page.goto('/')
+  await page.locator('.dock-btn[data-panel="filter"]').click()
   const results = await new AxeBuilder({ page }).withTags(TAGS).analyze()
   expect(results.violations).toEqual([])
 })
