@@ -131,12 +131,49 @@ function initDock(): void {
   })
 }
 
+function initHorizontal(): void {
+  const mq = window.matchMedia('(min-width: 1024px)')
+  const deck = document.getElementById('main')
+  if (!deck) return
+
+  deck.addEventListener(
+    'wheel',
+    (e) => {
+      if (!mq.matches) return
+      // let an overflowing slide scroll vertically first, then move horizontally
+      const slide = (e.target as HTMLElement).closest<HTMLElement>('.yr, header, footer')
+      if (slide) {
+        const down = e.deltaY > 0 && slide.scrollTop + slide.clientHeight < slide.scrollHeight - 1
+        const up = e.deltaY < 0 && slide.scrollTop > 0
+        if (down || up) return
+      }
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        deck.scrollLeft += e.deltaY
+        e.preventDefault()
+      }
+    },
+    { passive: false }
+  )
+
+  window.addEventListener('keydown', (e) => {
+    if (!mq.matches) return
+    const t = e.target as HTMLElement
+    if (t.closest('input, textarea, [contenteditable]')) return
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+      deck.scrollBy({ left: window.innerWidth, behavior: 'smooth' })
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      deck.scrollBy({ left: -window.innerWidth, behavior: 'smooth' })
+    }
+  })
+}
+
 function init(): void {
   const root = document.getElementById('timeline')
   if (!root) return
   initReadFurther(root)
   initFilter(root)
   initDock()
+  initHorizontal()
 }
 
 if (document.readyState !== 'loading') init()

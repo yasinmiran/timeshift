@@ -235,3 +235,92 @@ html {
   outline-offset: 2px;
   border-radius: 2px;
 }
+
+/* the per-slide era label only shows in the desktop horizontal deck */
+.yr-era {
+  display: none;
+}
+
+/* DESKTOP: a full-page horizontal slide deck. Hero, each year, and the footer
+   become 100vw scroll-snap slides scrolled left-to-right; scrollbars hidden,
+   type a touch larger. Mobile keeps the vertical scroll above untouched. */
+@media (min-width: 1024px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+  main {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  main::-webkit-scrollbar {
+    display: none;
+  }
+  /* let the year/era wrappers dissolve so years become direct slides in the row */
+  #timeline,
+  .era {
+    display: contents;
+  }
+  .era-band {
+    display: none;
+  }
+  main > header,
+  .yr,
+  main > footer {
+    flex: 0 0 100vw;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 3rem clamp(2rem, 8vw, 9rem);
+    scroll-snap-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: safe center;
+    align-items: center;
+  }
+  main > header::-webkit-scrollbar,
+  .yr::-webkit-scrollbar,
+  main > footer::-webkit-scrollbar {
+    display: none;
+  }
+  .yr::before {
+    display: none;
+  }
+  .yr-era {
+    display: block;
+  }
+  .yr h2 {
+    font-size: 5.5rem;
+  }
+  .yr-summary {
+    font-size: 1.05rem;
+    max-width: 34rem;
+  }
+  .yr ol {
+    width: 100%;
+    max-width: 32rem;
+    gap: 0.4rem;
+  }
+  .yr .ev-head {
+    font-size: 1.3rem;
+  }
+  .yr .ev-blurb {
+    font-size: 1rem;
+    max-width: 26rem;
+  }
+  .yr .ev-more {
+    font-size: 0.85rem;
+  }
+}
