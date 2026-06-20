@@ -6,14 +6,7 @@ const stops = loadStops()
 ---
 
 <nav aria-label="Timeline of time-change incidents">
-  <div class="relative">
-    <div
-      class="pointer-events-none absolute left-1/2 top-3 bottom-3 w-px -translate-x-1/2 bg-spine"
-      aria-hidden="true"
-    >
-    </div>
-    <ol>
-      {stops.map((stop) => <Stop stop={stop} />)}
-    </ol>
-  </div>
+  <ol>
+    {stops.map((stop, i) => <Stop stop={stop} isFirst={i === 0} />)}
+  </ol>
 </nav>

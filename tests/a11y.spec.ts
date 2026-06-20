@@ -12,6 +12,10 @@ test('home page has no axe violations', async ({ page }) => {
 test('expanded stop has no axe violations', async ({ page }) => {
   await page.goto('/')
   await page.locator('ol > li:first-child summary').click()
+  // let the reveal animation settle so contrast is measured at full opacity
+  await page
+    .locator('ol > li:first-child .stop-panel')
+    .evaluate((el) => Promise.all(el.getAnimations().map((a) => a.finished)))
   const results = await new AxeBuilder({ page }).withTags(TAGS).analyze()
   expect(results.violations).toEqual([])
 })

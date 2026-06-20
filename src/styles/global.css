@@ -11,6 +11,10 @@
   --color-spine: #e4ddd2;
   --color-panel: #f3ede3;
   --color-kicker: #8a5a2c;
+  --color-story: #5f594f;
+  --color-devnote: #726252;
+  --color-devnote-strong: #5a4a3a;
+  --color-hairline: #ece5da;
   --font-display: "Fraunces Variable", Georgia, serif;
   --font-sans: "Inter Variable", system-ui, sans-serif;
 }
@@ -43,6 +47,21 @@ summary:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* gentle reveal when a stop opens; disabled under reduced-motion below */
+@keyframes stop-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+details[name="stop"][open] .stop-panel {
+  animation: stop-reveal 0.22s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

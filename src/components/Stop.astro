@@ -4,13 +4,23 @@ import CategoryIcon from './CategoryIcon.astro'
 
 interface Props {
   stop: Stop
+  isFirst?: boolean
 }
 
-const { stop } = Astro.props
+const { stop, isFirst = false } = Astro.props
 const future = stop.isFuture
 ---
 
 <li class="relative text-center py-9">
+  {/* connector: bridges the gap above this node, never crossing prose; none on the first stop */}
+  {!isFirst && (
+    <div
+      class="pointer-events-none absolute left-1/2 -top-9 h-[5rem] w-px -translate-x-1/2 bg-spine z-0"
+      aria-hidden="true"
+    >
+    </div>
+  )}
+
   <CategoryIcon category={stop.category} color={stop.node} dim={future} />
 
   <p class="font-sans text-[11px] uppercase tracking-[0.16em] text-kicker mb-1.5">
@@ -30,37 +40,37 @@ const future = stop.isFuture
       <span class="when-open">Close <span aria-hidden="true">&#8593;</span></span>
     </summary>
 
-    <div class="border-t border-[#ece5da] pt-3.5 mt-3">
-      <p class="font-sans text-[13px] leading-relaxed text-[#5f594f] mb-3.5">{stop.story}</p>
+    <div class="stop-panel border-t border-hairline pt-3.5 mt-3">
+      <p class="font-sans text-[14px] leading-relaxed text-story mb-3.5">{stop.story}</p>
 
       <dl class="flex flex-col gap-2 mb-3.5">
-        <div class="flex justify-between gap-3 font-sans text-xs">
+        <div class="flex justify-between gap-3 font-sans text-[13px]">
           <dt class="text-muted">When</dt>
           <dd class="text-ink font-medium text-right">{stop.facts.when}</dd>
         </div>
-        <div class="flex justify-between gap-3 font-sans text-xs">
+        <div class="flex justify-between gap-3 font-sans text-[13px]">
           <dt class="text-muted">Who decided</dt>
           <dd class="text-ink font-medium text-right">{stop.facts.who}</dd>
         </div>
         {stop.facts.tzRelease && (
-          <div class="flex justify-between gap-3 font-sans text-xs">
-            <dt class="text-muted">In the time database</dt>
-            <dd class="text-ink font-medium text-right">IANA tzdata {stop.facts.tzRelease}</dd>
+          <div class="flex justify-between gap-3 font-sans text-[13px]">
+            <dt class="text-muted">IANA tz release</dt>
+            <dd class="text-ink font-medium text-right">{stop.facts.tzRelease}</dd>
           </div>
         )}
       </dl>
 
-      <p class="font-sans text-xs leading-relaxed text-[#726252] bg-panel rounded-lg p-3 mb-3.5">
-        <span class="font-semibold text-[#5a4a3a]">For developers: </span>{stop.devNote}
+      <p class="font-sans text-[13px] leading-relaxed text-devnote bg-panel rounded-lg p-3 mb-3.5">
+        <span class="font-semibold text-devnote-strong">For developers: </span>{stop.devNote}
       </p>
 
       <a
-        class="font-sans text-xs font-medium text-link"
+        class="font-sans text-[13px] font-medium text-link"
         href={stop.source.url}
         target="_blank"
         rel="noopener noreferrer"
       >
-        {stop.source.title} <span aria-hidden="true">&#8599;</span>
+        {stop.source.title} <span aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span>
       </a>
     </div>
   </details>

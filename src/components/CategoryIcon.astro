@@ -16,7 +16,7 @@ const { category, color, dim = false } = Astro.props
     'relative z-10 mx-auto mb-4 flex h-8 w-8 items-center justify-center rounded-full bg-paper',
     dim && 'opacity-40',
   ]}
-  style={`color:${color}`}
+  style={`color:${color};box-shadow:inset 0 0 0 1px color-mix(in srgb, ${color} 38%, transparent)`}
   aria-hidden="true"
 >
   <svg
