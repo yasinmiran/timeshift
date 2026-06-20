@@ -1,0 +1,12 @@
+---
+import { ICONS } from '../lib/icons'
+import { CATEGORIES, type CategoryId } from '../lib/categories'
+
+// One hidden sprite of category glyphs, referenced by every node via <use>, so
+// the icons cost ~2 live nodes per event instead of a full inline path set.
+const ids = Object.keys(CATEGORIES) as CategoryId[]
+---
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  {ids.map((id) => <symbol id={`cat-${id}`} viewBox="0 0 24 24" set:html={ICONS[id]} />)}
+</svg>

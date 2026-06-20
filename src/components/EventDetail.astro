@@ -8,9 +8,12 @@ interface Props {
 const { stop } = Astro.props
 ---
 
-{/* The "read further" layer: when, who decided, developer notes, and citations.
-    The headline, category, date, and story already sit inline in the card. */}
-<div class="ev-extra-inner">
+{/* The "read more" layer: the full story, then when / who decided / developer
+    notes / citations. The icon, category, date, headline, and a short blurb
+    already sit inline in the node. */}
+<div class="ev-extra-inner mx-auto max-w-[20rem] text-left">
+  <p class="font-sans text-[14px] leading-relaxed text-story mb-3.5">{stop.story}</p>
+
   <dl class="flex flex-col gap-2 mb-3.5">
     <div class="flex justify-between gap-3 font-sans text-[13px]">
       <dt class="text-muted">When</dt>

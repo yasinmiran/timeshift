@@ -9,9 +9,9 @@ test('home page has no axe violations', async ({ page }) => {
   expect(results.violations).toEqual([])
 })
 
-test('an expanded "read further" layer has no axe violations', async ({ page }) => {
+test('an expanded "read more" layer has no axe violations', async ({ page }) => {
   await page.goto('/')
-  const first = page.locator('.ev-card').first()
+  const first = page.locator('.ev').first()
   await first.locator('.ev-more').click()
   // let the reveal animation settle so contrast is measured at full opacity
   await first

@@ -4,6 +4,7 @@ import Hero from '../components/Hero.astro'
 import Dock from '../components/Dock.astro'
 import EraBand from '../components/EraBand.astro'
 import Year from '../components/Year.astro'
+import IconSprite from '../components/IconSprite.astro'
 import Footer from '../components/Footer.astro'
 import { loadYears, loadGotchas } from '../lib/events'
 import { ERAS } from '../lib/eras'
@@ -32,6 +33,7 @@ const eraGroups = ERAS.map((era) => ({
 
 <Base>
   <main id="main" tabindex="-1" class="mx-auto max-w-[600px] px-5">
+    <IconSprite />
     <Hero />
 
     <div id="timeline">

@@ -34,13 +34,42 @@ button:focus-visible {
   border-radius: 2px;
 }
 
-/* event card: story is always inline; a thin category-colored rule anchors it */
-.ev-card {
-  border-left: 2px solid color-mix(in srgb, var(--cat, var(--color-spine)) 55%, var(--color-hairline));
-  padding-left: 0.9rem;
+/* centered nodes on a connector spine: a short line bridges the gap above each
+   event icon, and above each year except the first in its era (the era band is
+   the break). The icon sits on paper and masks the line behind it. */
+.ev {
+  position: relative;
+  padding-top: 2.1rem;
+}
+.ev::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0.3rem;
+  height: 1.5rem;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--color-spine);
+}
+.yr {
+  position: relative;
+}
+.yr::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 1.5rem;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--color-spine);
+}
+.era > .yr:first-of-type::before {
+  display: none;
 }
 
-/* "read further": reveals the when/who/dev-notes layer in place; chevron flips */
+/* "read more": reveals the full story plus the when/who/dev-notes layer in
+   place; chevron flips */
 .ev-more {
   display: inline-flex;
   align-items: center;
@@ -71,7 +100,6 @@ button:focus-visible {
   border-top: 1px solid var(--color-hairline);
   margin-top: 0.75rem;
   padding-top: 0.85rem;
-  max-width: 22rem;
 }
 
 [hidden] {

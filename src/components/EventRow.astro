@@ -1,5 +1,6 @@
 ---
 import type { Stop } from '../lib/events'
+import CategoryIcon from './CategoryIcon.astro'
 import EventDetail from './EventDetail.astro'
 
 interface Props {
@@ -7,23 +8,26 @@ interface Props {
 }
 
 const { stop } = Astro.props
+const future = stop.isFuture
 // Show a precise date inline only when it adds something beyond the year heading.
 const preciseDate = stop.dateLabel !== String(stop.year) ? stop.dateLabel : null
 ---
 
-<li class="ev ev-card" data-tier={stop.tier} data-category={stop.category} style={`--cat:${stop.node}`}>
+<li class="ev" data-tier={stop.tier} data-category={stop.category}>
+  <CategoryIcon category={stop.category} color={stop.node} dim={future} />
+
   <p class="ev-kicker font-sans text-[11px] uppercase tracking-[0.16em] text-kicker">
     {stop.categoryLabel}{preciseDate && <Fragment> &middot; {preciseDate}</Fragment>}
   </p>
-  <h3 class="ev-head font-display font-medium text-[17px] leading-snug text-ink mt-0.5">{stop.headline}</h3>
-  <p class="ev-story font-sans text-[14px] leading-relaxed text-story mt-1.5">{stop.story}</p>
+  <h3 class="ev-head font-display font-medium text-[18px] leading-snug text-ink mt-1">{stop.headline}</h3>
+  <p class="ev-blurb font-sans text-[13.5px] leading-relaxed text-muted max-w-[17rem] mx-auto mt-1.5">{stop.blurb}</p>
 
   <button type="button" class="ev-more font-sans text-[12px] font-medium text-link mt-2.5" aria-expanded="false">
-    Read further
+    Read more
   </button>
 
-  {/* The deeper layer lives in an inert <template> (in the HTML for crawlers,
-      out of the live DOM); timeline.ts clones it in place on demand. */}
+  {/* The full story plus when/who/dev-notes/sources live in an inert <template>
+      (in the HTML for crawlers, out of the live DOM); cloned in place on demand. */}
   <template>
     <EventDetail stop={stop} />
   </template>

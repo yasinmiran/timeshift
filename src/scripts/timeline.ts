@@ -10,7 +10,7 @@ function initReadFurther(root: HTMLElement): void {
   root.addEventListener('click', (e) => {
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.ev-more')
     if (!btn) return
-    const card = btn.closest('.ev-card')
+    const card = btn.closest('.ev')
     if (!card) return
     const existing = card.querySelector('.ev-extra')
     if (existing) {

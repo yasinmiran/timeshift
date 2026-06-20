@@ -11,17 +11,15 @@ const { group, anchorId } = Astro.props
 const { year, summary, stops, decade, isFuture } = group
 ---
 
-<section class="yr py-7" data-year={year} data-decade={decade} id={anchorId}>
-  <header class="text-center mb-5">
-    <h2 class:list={['font-display font-light leading-none text-ink text-5xl', isFuture && 'opacity-70']}>
-      <time datetime={String(year)}>{year}</time>
-    </h2>
-    <p class="mt-2 font-sans text-[13px] leading-relaxed text-muted max-w-[20rem] mx-auto">
-      {summary}{isFuture && <span class="text-muted"> &middot; still ahead</span>}
-    </p>
-  </header>
+<section class="yr py-6 text-center" data-year={year} data-decade={decade} id={anchorId}>
+  <h2 class:list={['font-display font-light leading-none text-ink text-5xl', isFuture && 'opacity-70']}>
+    <time datetime={String(year)}>{year}</time>
+  </h2>
+  <p class="yr-summary mt-2 font-sans text-[13px] leading-relaxed text-muted max-w-[20rem] mx-auto">
+    {summary}{isFuture && <span class="text-muted"> &middot; still ahead</span>}
+  </p>
 
-  <ol class="flex flex-col gap-2">
+  <ol class="mt-4 flex flex-col">
     {stops.map((stop) => <EventRow stop={stop} />)}
   </ol>
 </section>

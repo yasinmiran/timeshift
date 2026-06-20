@@ -1,0 +1,33 @@
+---
+import type { CategoryId } from '../lib/categories'
+
+interface Props {
+  category: CategoryId
+  color: string
+  dim?: boolean
+}
+
+const { category, color, dim = false } = Astro.props
+---
+
+<span
+  class:list={[
+    'relative z-10 mx-auto mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-paper',
+    dim && 'opacity-40',
+  ]}
+  style={`color:${color};box-shadow:inset 0 0 0 1px color-mix(in srgb, ${color} 38%, transparent)`}
+  aria-hidden="true"
+>
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <use href={`#cat-${category}`}></use>
+  </svg>
+</span>

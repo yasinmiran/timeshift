@@ -5,29 +5,30 @@ test('the timeline renders year groups, each with a summary', async ({ page }) =
   const years = page.locator('#timeline .yr')
   expect(await years.count()).toBeGreaterThan(40)
   await expect(years.first().locator('h2 time')).toBeVisible()
-  await expect(years.first().locator('header p')).not.toBeEmpty()
+  await expect(years.first().locator('.yr-summary')).not.toBeEmpty()
 })
 
-test('event descriptions are visible inline without any interaction', async ({ page }) => {
+test('every event shows a category icon and a short blurb inline', async ({ page }) => {
   await page.goto('/')
-  const stories = page.locator('.ev-card .ev-story')
-  expect(await stories.count()).toBeGreaterThan(100)
-  await expect(stories.first()).toBeVisible()
-  await expect(stories.first()).not.toBeEmpty()
+  const blurbs = page.locator('.ev .ev-blurb')
+  expect(await blurbs.count()).toBeGreaterThan(100)
+  await expect(blurbs.first()).toBeVisible()
+  await expect(blurbs.first()).not.toBeEmpty()
+  await expect(page.locator('.ev svg use').first()).toBeAttached()
 })
 
-test('"read further" reveals when/who/source and toggles back', async ({ page }) => {
+test('"read more" reveals the full story plus when/who/source and toggles back', async ({ page }) => {
   await page.goto('/')
-  const card = page.locator('.ev-card').first()
-  const more = card.locator('.ev-more')
+  const node = page.locator('.ev').first()
+  const more = node.locator('.ev-more')
   await more.click()
   await expect(more).toHaveAttribute('aria-expanded', 'true')
-  const extra = card.locator('.ev-extra')
+  const extra = node.locator('.ev-extra')
   await expect(extra).toHaveCount(1)
   await expect(extra.locator('a[href^="http"]').first()).toBeVisible()
   await expect(extra.getByText('Who decided')).toBeVisible()
   await more.click()
-  await expect(card.locator('.ev-extra')).toHaveCount(0)
+  await expect(node.locator('.ev-extra')).toHaveCount(0)
 })
 
 test('the dock filter narrows the timeline to one category', async ({ page }) => {
@@ -69,8 +70,10 @@ test('opening a dock panel closes the previously open one', async ({ page }) => 
 
 test('the initial DOM stays light enough for good performance', async ({ page }) => {
   await page.goto('/')
-  // <template> detail is excluded from the live tree, so the whole corpus on one
-  // page stays well under the budget that scored Lighthouse performance ~100.
+  // The "read more" detail lives in inert <template>s (excluded from the live
+  // tree) and icons share one sprite, so the whole corpus on one page stays far
+  // below the ~16k nodes that tanked performance. DOM size is only a soft factor
+  // for a static, zero-blocking-JS page; this guards against runaway growth.
   const nodes = await page.evaluate(() => document.querySelectorAll('*').length)
-  expect(nodes).toBeLessThan(4500)
+  expect(nodes).toBeLessThan(5500)
 })
