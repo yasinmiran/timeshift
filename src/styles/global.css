@@ -307,20 +307,88 @@ html {
   .yr-summary {
     font-size: 1.05rem;
     max-width: 34rem;
+    margin-bottom: 0.5rem;
   }
+  /* sub-events split into two columns beside each other; the single vertical
+     spine gives way to a grid in deck mode */
   .yr ol {
-    width: 100%;
-    max-width: 32rem;
-    gap: 0.4rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.75rem 3rem;
+    width: auto;
+    max-width: 58rem;
+    margin-top: 1.5rem;
+  }
+  .yr .ev {
+    flex: 0 1 22rem;
+    padding-top: 0;
+  }
+  .yr .ev::before {
+    display: none;
   }
   .yr .ev-head {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
   }
   .yr .ev-blurb {
-    font-size: 1rem;
-    max-width: 26rem;
+    font-size: 0.98rem;
+    max-width: 24rem;
   }
   .yr .ev-more {
     font-size: 0.85rem;
   }
+  /* a vertical "back to top" is meaningless in the horizontal deck */
+  .dock-top {
+    display: none;
+  }
+  /* the hero's down-arrow implies vertical scroll; the deck moves sideways */
+  .hero-arrow {
+    display: none;
+  }
+}
+
+/* first-load cue that the deck scrolls sideways (desktop only, added by JS) */
+#scroll-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  background: color-mix(in srgb, var(--color-paper) 85%, transparent);
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  padding: 0.4rem 0.95rem;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 3px rgb(33 30 26 / 0.08);
+  z-index: 35;
+  transition: opacity 0.45s ease;
+}
+#scroll-hint .ar {
+  display: inline-block;
+  animation: hint-nudge 1.3s ease-in-out infinite;
+}
+#scroll-hint .ar.l {
+  animation-name: hint-nudge-l;
+}
+#scroll-hint.gone {
+  opacity: 0;
+  pointer-events: none;
+}
+@keyframes hint-nudge {
+  0%, 100% { transform: translateX(0); opacity: 0.45; }
+  50% { transform: translateX(3px); opacity: 1; }
+}
+@keyframes hint-nudge-l {
+  0%, 100% { transform: translateX(0); opacity: 0.45; }
+  50% { transform: translateX(-3px); opacity: 1; }
 }

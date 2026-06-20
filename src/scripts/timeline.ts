@@ -165,6 +165,20 @@ function initHorizontal(): void {
       deck.scrollBy({ left: -window.innerWidth, behavior: 'smooth' })
     }
   })
+
+  // first-load cue that the deck scrolls sideways; clears on first scroll or after a few seconds
+  if (mq.matches) {
+    const hint = document.createElement('div')
+    hint.id = 'scroll-hint'
+    hint.setAttribute('aria-hidden', 'true')
+    hint.innerHTML = '<span class="ar l">‹</span> scroll <span class="ar">›</span>'
+    document.body.appendChild(hint)
+    // remove outright on first scroll (no fade window for axe to sample mid-transition)
+    const kill = () => hint.remove()
+    deck.addEventListener('scroll', kill, { once: true, passive: true })
+    window.setTimeout(() => hint.classList.add('gone'), 6000)
+    window.setTimeout(() => hint.remove(), 6500)
+  }
 }
 
 function init(): void {
