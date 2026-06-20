@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/inter";
+
+@theme {
+  --color-paper: #faf8f4;
+  --color-ink: #211e1a;
+  --color-muted: #6b655c;
+  --color-accent: #bb6a4e;
+  --color-link: #9c4a26;
+  --color-spine: #e4ddd2;
+  --color-panel: #f3ede3;
+  --color-kicker: #8a5a2c;
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* native details accordion: hide default marker, swap the summary label */
+summary {
+  list-style: none;
+  cursor: pointer;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .when-closed {
+  display: none;
+}
+details:not([open]) .when-open {
+  display: none;
+}
+
+a:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

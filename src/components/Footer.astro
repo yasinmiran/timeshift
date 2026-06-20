@@ -1,0 +1,21 @@
+---
+import { CATEGORIES } from '../lib/categories'
+
+const legend = Object.values(CATEGORIES)
+---
+
+<footer class="text-center pt-12 pb-20 mt-8 border-t border-spine">
+  <p class="font-sans text-xs leading-relaxed text-muted max-w-sm mx-auto mb-7">
+    Every entry is checked against an authoritative source: the time-zone records kept
+    by IANA, the leap seconds announced by IERS, and the standards written by the IETF.
+  </p>
+
+  <ul class="flex flex-wrap justify-center gap-x-4 gap-y-2 max-w-xs mx-auto">
+    {legend.map((c) => (
+      <li class="flex items-center gap-1.5 font-sans text-[11px] text-muted">
+        <span class="h-2 w-2 rounded-full" style={`background:${c.node}`} aria-hidden="true"></span>
+        {c.name}
+      </li>
+    ))}
+  </ul>
+</footer>
