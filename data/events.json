@@ -5989,29 +5989,6 @@
     "tier": "core"
   },
   {
-    "id": "eu-dst-directive-97-44",
-    "title": "EU Directive 97/44/EC locks a shared DST schedule for 1998-2001",
-    "date": "1997-07-22",
-    "category": "dst-policy",
-    "body": "European Parliament and Council of the European Union",
-    "whatChanged": "Directive 97/44/EC (22 July 1997) fixed a single Community-wide summer-time schedule for 1998 through 2001: clocks advance on the last Sunday in March at 01:00 GMT and return on the last Sunday in October at 01:00 GMT. It codified a single Community-wide schedule, superseding any remaining per-country variation that had existed under earlier directives, and required all member states to switch at exactly the same instant. It was the direct predecessor of the permanent Directive 2000/84/EC.",
-    "technicalImpact": "Cemented the EU-wide simultaneous switch; tz database entries for European zones reflect this synchronisation. Any code computing DST transitions for EU zones from 1998 onward relies on this rule remaining stable until superseded by 2000/84/EC.",
-    "sourceUrl": "https://eur-lex.europa.eu/eli/dir/1997/44/oj/eng",
-    "headline": "Europe's clocks set to tick together",
-    "blurb": "A 1997 EU directive locked every member state's clocks onto the same spring-forward and fall-back moments for 1998-2001.",
-    "story": "Before this directive, a handful of EU countries switched their clocks on slightly different dates, creating short windows where travellers and systems had to track mismatched offsets. Directive 97/44/EC erased those gaps, requiring the last Sunday in March and last Sunday in October as the single Community-wide rule. The directive covered four years and was then made permanent by a follow-up law in 2000. Software handling European time zones benefits from this uniformity, but any code that tried to model pre-1998 per-country exceptions needs to account for the older patchwork.",
-    "reviewTag": "verified",
-    "tier": "deep",
-    "validation": {
-      "verdict": "written-2026",
-      "reverify": {
-        "tag": "verified",
-        "source": "write-records deep pass",
-        "checkedOn": "2026-06-20"
-      }
-    }
-  },
-  {
     "id": "eu-dst-directive-97-44-1997",
     "title": "EU Directive 97/44/EC unifies summer-time end date across member states",
     "date": "1997-07-22",
