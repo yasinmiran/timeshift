@@ -15,7 +15,7 @@ const { year, summary, stops, decade, isFuture } = group
   <h2 class:list={['font-display font-light leading-none text-ink text-5xl', isFuture && 'opacity-70']}>
     <time datetime={String(year)}>{year}</time>
   </h2>
-  <p class="yr-summary mt-2 font-sans text-[13px] leading-relaxed text-muted max-w-[20rem] mx-auto">
+  <p class="yr-summary mt-2 font-sans text-[14px] leading-relaxed text-muted max-w-[22rem] mx-auto">
     {summary}{isFuture && <span class="text-muted"> &middot; still ahead</span>}
   </p>
 

@@ -62,7 +62,9 @@ function initFilter(root: HTMLElement): void {
   tierBtn?.addEventListener('click', () => {
     highlightsOnly = !highlightsOnly
     tierBtn.setAttribute('aria-pressed', String(highlightsOnly))
-    tierBtn.setAttribute('aria-label', highlightsOnly ? 'Show all events' : 'Show highlights only')
+    const tierLabel = highlightsOnly ? 'Show all events' : 'Show highlights only'
+    tierBtn.setAttribute('aria-label', tierLabel)
+    tierBtn.setAttribute('title', tierLabel)
     tierBtn.classList.toggle('is-on', highlightsOnly)
     apply()
   })

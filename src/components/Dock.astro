@@ -52,30 +52,30 @@ const cats = Object.entries(CATEGORIES) as [CategoryId, { label: string; node: s
   </div>
 
   <div class="flex flex-col gap-2">
-    <button type="button" class="dock-btn" data-panel="filter" aria-label="Filter by category" aria-expanded="false">
+    <button type="button" class="dock-btn" data-panel="filter" title="Filter by category" aria-label="Filter by category" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M3 5h18l-7 8v6l-4 2v-8z"></path>
       </svg>
     </button>
-    <button type="button" id="dock-tier" class="dock-btn" aria-label="Show highlights only" aria-pressed="false">
+    <button type="button" id="dock-tier" class="dock-btn" title="Show highlights only" aria-label="Show highlights only" aria-pressed="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 3l2.5 5.5 6 .6-4.4 4 1.3 5.9L12 21l-5.4 3 1.3-5.9-4.4-4 6-.6z"></path>
       </svg>
     </button>
-    <button type="button" class="dock-btn" data-panel="jump" aria-label="Jump to a decade" aria-expanded="false">
+    <button type="button" class="dock-btn" data-panel="jump" title="Jump to a decade" aria-label="Jump to a decade" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="8.5"></circle>
         <path d="M12 7.5V12l3 2"></path>
       </svg>
     </button>
-    <button type="button" class="dock-btn" data-panel="gotcha" aria-label="Gotchas, coming in a future edition" aria-expanded="false">
+    <button type="button" class="dock-btn" data-panel="gotcha" title="Gotchas (a future edition)" aria-label="Gotchas, coming in a future edition" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 3.5l9 16H3z"></path>
         <path d="M12 10v4"></path>
         <path d="M12 17.5h.01"></path>
       </svg>
     </button>
-    <a href="#main" class="dock-btn" aria-label="Back to top">
+    <a href="#main" class="dock-btn" title="Back to top" aria-label="Back to top">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 19V6M6 12l6-6 6 6"></path>
       </svg>
