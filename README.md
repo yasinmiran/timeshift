@@ -1,9 +1,9 @@
 # TimeShift
 
 A walk through the time changes that matter to anyone who builds with time, from
-**1700 to 2106**: the birth of standard time and the prime meridian, every leap
-second, daylight-saving switches, offset and date-line changes, and the epoch
-rollovers still ahead.
+**1582 to 2106**: the Gregorian calendar reform, the birth of standard time and the
+prime meridian, every leap second, daylight-saving switches, offset and date-line
+changes, and the epoch rollovers still ahead.
 
 ## Sources
 
@@ -20,7 +20,7 @@ Anything that could not be verified against a source is not in the corpus.
 
 ## The corpus
 
-`data/events.json` is the single source of truth: **480 dated entries** on the
+`data/events.json` is the single source of truth: **482 dated entries** on the
 timeline (plus a couple of evergreen, dateless gotchas held back for later). Each
 carries its date, what changed, the responsible body, the technical impact, the
 IANA tz release that encoded it where applicable, and a cited source. Run

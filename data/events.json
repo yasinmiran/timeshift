@@ -13285,5 +13285,37 @@
       }
     },
     "gotcha": true
+  },
+  {
+    "id": "gregorian-calendar-reform-1582",
+    "title": "The Gregorian calendar reform of 1582",
+    "date": "1582-10-04/1582-10-15",
+    "category": "standardization",
+    "body": "Pope Gregory XIII",
+    "whatChanged": "The Julian calendar was replaced by the Gregorian calendar in adopting Catholic countries. Ten calendar days were removed in a single step: Thursday 4 October 1582 was immediately followed by Friday 15 October 1582, so the ten dates from 5 to 14 October 1582 do not exist in those jurisdictions. The leap-year rule was also tightened (centurial years leap only if divisible by 400). Adoption was staggered across countries over more than three centuries.",
+    "technicalImpact": "This cutover is the canonical date-handling discontinuity in software. There are two distinct calendar models: the proleptic Gregorian calendar, which projects Gregorian rules backward without any gap (used by the IANA tz database, ISO 8601, and most modern date libraries), and a hybrid Julian-then-Gregorian calendar that reproduces the 1582 jump (the historical default of java.util.GregorianCalendar). Date arithmetic across the boundary can produce or accept nonexistent dates such as 1582-10-10, and counting days between a Julian-era date and a modern date differs by ten or more depending on which model you use. Because countries switched on different dates (1582, 1700, 1752, 1918, 1923, and others), any single hardcoded cutover is wrong for most of the world. Treat pre-modern dates as proleptic Gregorian unless you have explicit locale and calendar metadata.",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Gregorian_calendar",
+    "sourceTitle": "Gregorian calendar (Wikipedia)",
+    "headline": "Ten days vanish from October 1582",
+    "blurb": "Pope Gregory XIII's 1582 reform deleted ten days, making 4 October jump straight to 15 October in adopting countries.",
+    "story": "In 1582 the papal bull Inter gravissimas replaced the Julian calendar with the Gregorian one to stop the calendar drifting against the seasons. To erase the accumulated ten-day error, Catholic adopters skipped from Thursday 4 October 1582 straight to Friday 15 October 1582, so the dates 5 through 14 October never happened there. For developers this is the textbook calendar discontinuity: proleptic Gregorian systems pretend the gap never existed, while hybrid systems reproduce the jump, and the two disagree on date arithmetic and on whether a date like 1582-10-10 is even valid. Worse, countries switched at wildly different times, from 1582 to 1923, so a single hardcoded cutover is wrong almost everywhere. Treat historical dates as proleptic Gregorian unless you know the source calendar.",
+    "tier": "core",
+    "reviewTag": "verified"
+  },
+  {
+    "id": "british-gregorian-switch-1752",
+    "title": "Britain and its colonies adopt the Gregorian calendar (1752)",
+    "date": "1752-09-02/1752-09-14",
+    "category": "standardization",
+    "body": "Parliament of Great Britain",
+    "whatChanged": "Under the Calendar (New Style) Act 1750, Britain and its colonies (including America) switched from the Julian to the Gregorian calendar. Wednesday 2 September 1752 was followed directly by Thursday 14 September 1752, deleting 11 calendar days. The same Act moved the start of the legal year from 25 March to 1 January.",
+    "technicalImpact": "This is the famous `cal 9 1752` case, where the Unix cal command renders September 1752 with 11 days missing (the 3rd through the 13th simply do not exist). Many date libraries hardcode the British 1752 cutover, so historical British and American dates before 1752-09-14 can be off by 11 days from their proleptic Gregorian equivalents or can land on calendar days that never occurred. The companion shift of the year start from 25 March to 1 January means early-year dates between 1 January and 24 March were numbered to the prior year before 1752, so dual-dating (for example 1751/52) is common in historical records and must be normalized before timestamps can be compared or sorted.",
+    "sourceUrl": "https://www.legislation.gov.uk/apgb/Geo2/24/23/contents",
+    "sourceTitle": "Calendar (New Style) Act 1750 (legislation.gov.uk)",
+    "headline": "Britain drops 11 days in 1752",
+    "blurb": "The Calendar (New Style) Act 1750 made Britain and its colonies skip from 2 September straight to 14 September 1752, deleting 11 days and moving the legal new year to 1 January.",
+    "story": "For most of the 18th century, Britain still ran on the Julian calendar while Catholic Europe had moved to the Gregorian one, leaving the two systems 11 days apart. The Calendar (New Style) Act 1750 fixed this by ordering that the day after Wednesday 2 September 1752 be reckoned as Thursday 14 September 1752, erasing 11 calendar days in a single step across Britain and its colonies, America included. The same Act also moved the official start of the year from 25 March to 1 January, ending the confusing practice of dual-dating early-year records. Developers meet this history directly in the Unix cal command: run `cal 9 1752` and September shows a gap where the 3rd through the 13th should be. Because many date libraries hardcode this British cutover, historical pre-1752 British and American dates can be off by 11 days or resolve to days that never existed, so historical timestamps need careful normalization.",
+    "tier": "core",
+    "reviewTag": "verified"
   }
 ]
