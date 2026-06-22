@@ -238,68 +238,71 @@ html {
 
 /* vertical era rail: a fixed left-edge nav of the seven eras; click a marker to
    jump, and the marker for the era in view stays lit (scroll-spy in timeline.ts).
-   Hidden on narrow screens, where the dock's decade jump covers navigation. */
+   Shown on every viewport; dots only until a label is revealed on hover/focus. */
+.era[id] {
+  scroll-margin-top: 1.5rem;
+}
 .era-rail {
-  display: none;
+  position: fixed;
+  left: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+}
+.era-rail ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.era-rail a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem;
+  color: var(--color-muted);
+  text-decoration: none;
+}
+.era-rail .dot {
+  height: 9px;
+  width: 9px;
+  flex: none;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-muted) 50%, var(--color-hairline));
+  background: transparent;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+.era-rail .label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  transition: max-width 0.25s ease, opacity 0.2s ease;
+}
+.era-rail a:hover .label,
+.era-rail a:focus-visible .label {
+  max-width: 14rem;
+  opacity: 1;
+}
+.era-rail a:hover .dot,
+.era-rail a:focus-visible .dot {
+  border-color: var(--color-accent);
+}
+.era-rail a.active {
+  color: var(--color-ink);
+}
+.era-rail a.active .dot {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: scale(1.15);
 }
 @media (min-width: 900px) {
   .era-rail {
-    position: fixed;
     left: 1.25rem;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 30;
-    display: block;
   }
   .era-rail ol {
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-  }
-  .era-rail a {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    color: var(--color-muted);
-    text-decoration: none;
-  }
-  .era-rail .dot {
-    height: 9px;
-    width: 9px;
-    flex: none;
-    border-radius: 999px;
-    border: 1px solid color-mix(in srgb, var(--color-muted) 50%, var(--color-hairline));
-    background: transparent;
-    transition: background 0.15s, border-color 0.15s, transform 0.15s;
-  }
-  .era-rail .label {
-    font-family: var(--font-sans);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    max-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    opacity: 0;
-    transition: max-width 0.25s ease, opacity 0.2s ease;
-  }
-  .era-rail a:hover .label,
-  .era-rail a:focus-visible .label {
-    max-width: 14rem;
-    opacity: 1;
-  }
-  .era[id] {
-    scroll-margin-top: 1.5rem;
-  }
-  .era-rail a:hover .dot,
-  .era-rail a:focus-visible .dot {
-    border-color: var(--color-accent);
-  }
-  .era-rail a.active {
-    color: var(--color-ink);
-  }
-  .era-rail a.active .dot {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-    transform: scale(1.15);
+    gap: 0.4rem;
   }
 }
