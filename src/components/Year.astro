@@ -12,7 +12,6 @@ const { year, summary, stops, decade, isFuture } = group
 ---
 
 <section class="yr py-6 text-center" data-year={year} data-decade={decade} id={anchorId}>
-  <p class="yr-era font-sans text-[11px] uppercase tracking-[0.18em] text-kicker mb-3">{group.era.label}</p>
   <h2 class:list={['font-display font-light leading-none text-ink text-5xl', isFuture && 'opacity-70']}>
     <time datetime={String(year)}>{year}</time>
   </h2>

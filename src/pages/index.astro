@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro'
 import Hero from '../components/Hero.astro'
 import Dock from '../components/Dock.astro'
 import EraBand from '../components/EraBand.astro'
+import EraRail from '../components/EraRail.astro'
 import Year from '../components/Year.astro'
 import IconSprite from '../components/IconSprite.astro'
 import Footer from '../components/Footer.astro'
@@ -39,7 +40,7 @@ const eraGroups = ERAS.map((era) => ({
     <div id="timeline">
       {
         eraGroups.map(({ era, years }) => (
-          <section class="era" data-era={era.slug}>
+          <section class="era" id={`era-${era.slug}`} data-era={era.slug}>
             <EraBand era={era} />
             {years.map((y) => (
               <Year group={y} anchorId={anchorForYear.get(y.year)} />
@@ -52,6 +53,7 @@ const eraGroups = ERAS.map((era) => ({
     <Footer />
   </main>
 
+  <EraRail eras={eraGroups.map((g) => g.era)} />
   <Dock decades={decades} totalCount={total} gotchas={gotchas} />
 
   <script>

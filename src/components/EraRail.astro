@@ -1,0 +1,24 @@
+---
+import type { Era } from '../lib/eras'
+
+interface Props {
+  eras: Era[]
+}
+
+const { eras } = Astro.props
+---
+
+<nav class="era-rail" aria-label="Jump to an era">
+  <ol>
+    {
+      eras.map((e) => (
+        <li>
+          <a href={`#era-${e.slug}`} data-era={e.slug}>
+            <span class="dot" aria-hidden="true" />
+            <span class="label">{e.label}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>

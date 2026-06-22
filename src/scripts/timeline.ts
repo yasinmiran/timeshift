@@ -131,54 +131,27 @@ function initDock(): void {
   })
 }
 
-function initHorizontal(): void {
-  const mq = window.matchMedia('(min-width: 1024px)')
-  const deck = document.getElementById('main')
-  if (!deck) return
+function initEraRail(): void {
+  const rail = document.querySelector('.era-rail')
+  if (!rail || !('IntersectionObserver' in window)) return
+  const links = new Map<string, HTMLElement>()
+  rail.querySelectorAll<HTMLElement>('a[data-era]').forEach((a) => links.set(a.dataset.era || '', a))
+  const eras = Array.from(document.querySelectorAll<HTMLElement>('.era'))
+  if (!eras.length) return
 
-  deck.addEventListener(
-    'wheel',
-    (e) => {
-      if (!mq.matches) return
-      // let an overflowing slide scroll vertically first, then move horizontally
-      const slide = (e.target as HTMLElement).closest<HTMLElement>('.yr, header, footer')
-      if (slide) {
-        const down = e.deltaY > 0 && slide.scrollTop + slide.clientHeight < slide.scrollHeight - 1
-        const up = e.deltaY < 0 && slide.scrollTop > 0
-        if (down || up) return
-      }
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        deck.scrollLeft += e.deltaY
-        e.preventDefault()
-      }
-    },
-    { passive: false }
-  )
-
-  window.addEventListener('keydown', (e) => {
-    if (!mq.matches) return
-    const t = e.target as HTMLElement
-    if (t.closest('input, textarea, [contenteditable]')) return
-    if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-      deck.scrollBy({ left: window.innerWidth, behavior: 'smooth' })
-    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-      deck.scrollBy({ left: -window.innerWidth, behavior: 'smooth' })
-    }
-  })
-
-  // first-load cue that the deck scrolls sideways; clears on first scroll or after a few seconds
-  if (mq.matches) {
-    const hint = document.createElement('div')
-    hint.id = 'scroll-hint'
-    hint.setAttribute('aria-hidden', 'true')
-    hint.innerHTML = '<span class="ar l">‹</span> scroll <span class="ar">›</span>'
-    document.body.appendChild(hint)
-    // remove outright on first scroll (no fade window for axe to sample mid-transition)
-    const kill = () => hint.remove()
-    deck.addEventListener('scroll', kill, { once: true, passive: true })
-    window.setTimeout(() => hint.classList.add('gone'), 6000)
-    window.setTimeout(() => hint.remove(), 6500)
+  function setActive(slug: string | undefined): void {
+    for (const [s, a] of links) a.classList.toggle('active', s === slug)
   }
+  setActive(eras[0].dataset.era)
+
+  // a thin band across the viewport middle: whichever era crosses it is active
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) if (e.isIntersecting) setActive((e.target as HTMLElement).dataset.era)
+    },
+    { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
+  )
+  for (const s of eras) io.observe(s)
 }
 
 function init(): void {
@@ -187,7 +160,7 @@ function init(): void {
   initReadFurther(root)
   initFilter(root)
   initDock()
-  initHorizontal()
+  initEraRail()
 }
 
 if (document.readyState !== 'loading') init()
