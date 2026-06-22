@@ -11275,7 +11275,7 @@
     "category": "vendor-bug",
     "body": "Honda / Acura (in-car navigation; GPS time decoding)",
     "whatChanged": "From 1 January 2022, clocks in many Honda and Acura vehicles jumped to January 2002 and could not be corrected. The most credible analysis attributes it to a signed 32-bit integer overflow in the navigation firmware's YYMMDDhhmm date encoding (2022 dates exceed the int32 maximum of 2,147,483,647), and the manufacturer initially said it would resolve only later in the year.",
-    "technicalImpact": "A consumer-visible date-arithmetic bug: the firmware stored the date as a YYMMDDhhmm value in a signed 32-bit integer, which overflowed once 2022 dates exceeded 2,147,483,647, rolling the calendar back roughly 20 years to 2002. Owners could not fix it manually. The gpsd maintainer explicitly ruled out GPS week-number rollover as the mechanism.",
+    "technicalImpact": "A consumer-visible date-arithmetic bug: the firmware stored the date as a YYMMDDhhmm value in a signed 32-bit integer, which overflowed once 2022 dates exceeded 2,147,483,647, rolling the calendar back roughly 20 years to 2002. Owners could not fix it manually.",
     "sourceUrl": "https://www.theautopian.com/heres-why-some-honda-navigation-systems-are-permanently-stuck-in-2002/",
     "tzRelease": "",
     "validation": {
